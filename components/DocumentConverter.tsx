@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CircleNotch, Copy, Check, DownloadSimple, UploadSimple } from "@phosphor-icons/react";
+import { SpinnerGapIcon, CopyIcon, CheckIcon, DownloadSimpleIcon, UploadSimpleIcon } from "@phosphor-icons/react";
 import AlertBox from "@/components/AlertBox";
 import { createPandocInstance } from "@/lib/pandoc-core.js";
 import { inputFormats, outputFormats } from "@/lib/document-formats";
@@ -31,6 +31,7 @@ const PandocConverter: React.FC<PandocConverterProps> = ({
   const [targetFormat, setTargetFormat] = useState<OutputFormat | "">("");
   const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isConverting, setIsConverting] = useState(false);
   const [fileName, setFileName] = useState("");
   const [fileContent, setFileContent] = useState<Uint8Array | null>(null);
   const [textContent, setTextContent] = useState("");
@@ -168,31 +169,72 @@ const PandocConverter: React.FC<PandocConverterProps> = ({
       return;
 
     setError(null);
+    setIsConverting(true);
     try {
-      const inputStr = fileContent
-        ? new TextDecoder().decode(fileContent)
-        : textContent;
+      const isBinaryInput = inputFormats[sourceFormat]?.binary;
+      const isBinaryOutput = outputFormats[targetFormat]?.binary;
 
-      const { stdout } = await pandocInstance(
-        {
-          from: String(sourceFormat),
-          to: String(targetFormat),
-          standalone: true,
-        },
-        inputStr,
-        {}
-      );
+      const options: Record<string, unknown> = {
+        from: String(sourceFormat),
+        to: String(targetFormat),
+        standalone: true,
+      };
 
-      setOutputContent(stdout);
+      let stdin = "";
+      const files: Record<string, string | Blob> = {};
 
-      const outputFormatConfig = outputFormats[targetFormat];
-      if (outputFormatConfig?.binary) {
-        downloadOutput(stdout, outputFormatConfig);
+      if (isBinaryInput && fileContent) {
+        const inputFileName = `input${inputFormats[sourceFormat].ext}`;
+        files[inputFileName] = new Blob([fileContent.slice()]);
+        options["input-files"] = [inputFileName];
+      } else {
+        stdin = fileContent ? new TextDecoder().decode(fileContent) : textContent;
+      }
+
+      const outputFileName = isBinaryOutput
+        ? `output${outputFormats[targetFormat].ext ?? ".bin"}`
+        : null;
+      if (outputFileName) {
+        options["output-file"] = outputFileName;
+      }
+
+      // Cast needed because pandoc-core's files param accepts Blob but our
+      // stored state type uses string for compatibility with setPandocInstance.
+      const convert = pandocInstance as unknown as (
+        options: Record<string, unknown>,
+        stdin: string,
+        files: Record<string, string | Blob>
+      ) => Promise<{ stdout: string; files?: Record<string, Blob> }>;
+
+      const result = await convert(options, stdin, files);
+
+      if (isBinaryOutput && outputFileName) {
+        const outBlob = result.files?.[outputFileName];
+        if (outBlob) {
+          const outputFormatConfig = outputFormats[targetFormat];
+          const ext = outputFormatConfig.ext ?? ".bin";
+          const name = `${(fileName || "output").split(".")[0]}${ext}`;
+          const url = URL.createObjectURL(outBlob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = name;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          setOutputContent("[binary file downloaded]");
+        } else {
+          setError("Conversion produced no output. The format combination may not be supported.");
+        }
+      } else {
+        setOutputContent(result.stdout);
       }
     } catch (err) {
       setError(`Conversion failed: ${(err as Error).message}`);
+    } finally {
+      setIsConverting(false);
     }
-  }, [pandocInstance, fileContent, textContent, sourceFormat, targetFormat]);
+  }, [pandocInstance, fileContent, textContent, sourceFormat, targetFormat, fileName]);
 
   const downloadOutput = (
     content: string,
@@ -259,7 +301,7 @@ const PandocConverter: React.FC<PandocConverterProps> = ({
               onDragLeave={preventDefaults}
               onDrop={handleDrop}
             >
-              <UploadSimple size={24} />
+              <UploadSimpleIcon size={24} />
               <p className="mb-2 text-sm text-muted-foreground text-center">
                 <span className="font-semibold">Click to Select</span> or Drag and Drop
               </p>
@@ -338,13 +380,13 @@ const PandocConverter: React.FC<PandocConverterProps> = ({
             placeholder="Paste or type your content here..."
             value={textContent}
             onChange={(e) => setTextContent(e.target.value)}
-            className="min-h-64"
+            className="h-48 resize-none"
           />
         )}
 
         {!isTargetBinary && outputContent && (
           <div className="relative">
-            <Textarea value={outputContent} readOnly className="min-h-64" />
+            <Textarea value={outputContent} readOnly className="h-64 resize-none" />
             <Button
               variant="ghost"
               size="icon"
@@ -352,9 +394,9 @@ const PandocConverter: React.FC<PandocConverterProps> = ({
               onClick={copyToClipboard}
             >
               {copied ? (
-                <Check className="h-4 w-4" />
+                <CheckIcon className="h-4 w-4" />
               ) : (
-                <Copy className="h-4 w-4" />
+                <CopyIcon className="h-4 w-4" />
               )}
             </Button>
           </div>
@@ -364,12 +406,20 @@ const PandocConverter: React.FC<PandocConverterProps> = ({
           <Button
             onClick={handleConvert}
             disabled={
-              isLoading || (!fileContent && !textContent) || !sourceFormat || !targetFormat
+              isLoading || isConverting || (!fileContent && !textContent) || !sourceFormat || !targetFormat
             }
-            className="w-32"
+            className="w-36"
           >
             {isLoading ? (
-              <CircleNotch className="h-4 w-4 animate-spin" />
+              <>
+                <SpinnerGapIcon className="h-4 w-4 animate-spin mr-2" />
+                Loading…
+              </>
+            ) : isConverting ? (
+              <>
+                <SpinnerGapIcon className="h-4 w-4 animate-spin mr-2" />
+                Converting…
+              </>
             ) : (
               "Convert"
             )}
@@ -380,7 +430,7 @@ const PandocConverter: React.FC<PandocConverterProps> = ({
               onClick={handleDownload}
               className="flex items-center gap-2"
             >
-              <DownloadSimple className="h-4 w-4" />
+              <DownloadSimpleIcon className="h-4 w-4" />
               Download
             </Button>
           )}
