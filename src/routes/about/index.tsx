@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { SITE_URL } from '@/lib/site'
 
 export const Route = createFileRoute('/about/')({
   component: AboutPage,
@@ -12,7 +13,7 @@ export const Route = createFileRoute('/about/')({
       },
       { name: 'robots', content: 'index, follow' },
     ],
-    links: [{ rel: 'canonical', href: 'https://convifi.com/about' }],
+    links: [{ rel: 'canonical', href: `${SITE_URL}/about` }],
   }),
 })
 

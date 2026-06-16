@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { SITE_URL, SITE_OG_IMAGE } from '@/lib/site'
 import { FloatingCards } from '@/components/landing-page/floating-cards'
 import { FeatureSection } from '@/components/landing-page/feature-section'
 import { TestimonialSection } from '@/components/landing-page/testimonial-section'
@@ -27,19 +28,19 @@ export const Route = createFileRoute('/')({
         content: 'Convert video, audio, image, and document files free in your browser — no upload, no account, 100% private.',
       },
       { property: 'og:type', content: 'website' },
-      { property: 'og:url', content: 'https://convifi.com' },
+      { property: 'og:url', content: SITE_URL },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: 'Convifi — Free File Converter, No Upload Required' },
       { name: 'twitter:description', content: 'Convert files free in your browser — no upload, no account, 100% private.' },
-      { property: 'og:image', content: 'https://convifi.com/opengraph.png' },
+      { property: 'og:image', content: SITE_OG_IMAGE },
       { property: 'og:image:alt', content: 'Convifi — Free File Converter, No Upload Required' },
       { property: 'og:image:width', content: '1200' },
       { property: 'og:image:height', content: '630' },
-      { name: 'twitter:image', content: 'https://convifi.com/opengraph.png' },
+      { name: 'twitter:image', content: SITE_OG_IMAGE },
       { name: 'twitter:image:alt', content: 'Convifi — Free File Converter, No Upload Required' },
       { name: 'robots', content: 'index, follow' },
     ],
-    links: [{ rel: 'canonical', href: 'https://convifi.com' }],
+    links: [{ rel: 'canonical', href: SITE_URL }],
   }),
 })
 
@@ -58,11 +59,11 @@ function HomepageSchema() {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'Convifi',
-      url: 'https://convifi.com',
+      url: SITE_URL,
       description: 'Free browser-based file converter — no upload, no account required.',
       potentialAction: {
         '@type': 'SearchAction',
-        target: 'https://convifi.com/convert/{format}',
+        target: `${SITE_URL}/convert/{format}`,
         'query-input': 'required name=format',
       },
     },
@@ -70,7 +71,7 @@ function HomepageSchema() {
       '@context': 'https://schema.org',
       '@type': 'SoftwareApplication',
       name: 'Convifi',
-      url: 'https://convifi.com',
+      url: SITE_URL,
       applicationCategory: 'UtilitiesApplication',
       operatingSystem: 'Any (browser-based)',
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },

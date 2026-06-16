@@ -1,4 +1,4 @@
-# Convifi
+# Convifi (earlier ConvertFast)
 
 A free, browser-based file converter. Converts video, audio, images, and documents locally using WebAssembly — no file upload, no server, no account required.
 

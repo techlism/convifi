@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router'
+import { SITE_URL, SITE_OG_IMAGE } from '@/lib/site'
 import { blogPosts, type BlogPost } from '@/lib/blog-posts'
 import { CalendarBlank, Clock, ArrowLeft, ArrowRight } from '@phosphor-icons/react'
 
@@ -15,12 +16,12 @@ export const Route = createFileRoute('/blog/$slug')({
         { property: 'og:title', content: post.title },
         { property: 'og:description', content: post.description },
         { property: 'og:type', content: 'article' },
-        { property: 'og:image', content: 'https://convifi.com/opengraph.png' },
+        { property: 'og:image', content: SITE_OG_IMAGE },
         { property: 'og:image:alt', content: `${post.title} — Convifi` },
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:image', content: 'https://convifi.com/opengraph.png' },
+        { name: 'twitter:image', content: SITE_OG_IMAGE },
       ],
-      links: [{ rel: 'canonical', href: `https://convifi.com/blog/${params.slug}` }],
+      links: [{ rel: 'canonical', href: `${SITE_URL}/blog/${params.slug}` }],
     }
   },
   loader: ({ params }): BlogPost => {
@@ -41,7 +42,7 @@ function ArticleSchema({ post }: { post: BlogPost }) {
     publisher: {
       '@type': 'Organization',
       name: 'Convifi',
-      url: 'https://convifi.com',
+      url: SITE_URL,
     },
   }
   return (

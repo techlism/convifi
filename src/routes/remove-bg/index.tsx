@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { SITE_URL, SITE_OG_IMAGE } from '@/lib/site'
 import BackgroundRemover from '@/components/BackgroundRemover'
 import { Lock, CheckCircle, Lightning, DeviceMobile } from '@phosphor-icons/react'
 
@@ -20,16 +21,16 @@ export const Route = createFileRoute('/remove-bg/')({
       { property: 'og:title', content: 'Remove Background from Image Free — No Upload | Convifi' },
       { property: 'og:description', content: 'AI background removal that runs entirely in your browser. No upload, no account, no waiting.' },
       { property: 'og:type', content: 'website' },
-      { property: 'og:url', content: 'https://convifi.com/remove-bg' },
-      { property: 'og:image', content: 'https://convifi.com/opengraph.png' },
+      { property: 'og:url', content: `${SITE_URL}/remove-bg` },
+      { property: 'og:image', content: SITE_OG_IMAGE },
       { property: 'og:image:alt', content: 'Remove Image Background Free — Convifi' },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: 'Remove Background from Image Free — No Upload' },
       { name: 'twitter:description', content: 'AI background removal in your browser. No upload, no account, instant results.' },
-      { name: 'twitter:image', content: 'https://convifi.com/opengraph.png' },
+      { name: 'twitter:image', content: SITE_OG_IMAGE },
       { name: 'robots', content: 'index, follow' },
     ],
-    links: [{ rel: 'canonical', href: 'https://convifi.com/remove-bg' }],
+    links: [{ rel: 'canonical', href: `${SITE_URL}/remove-bg` }],
   }),
 })
 
@@ -37,7 +38,7 @@ const schema = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
   name: 'Background Remover — Remove Image Background Free',
-  url: 'https://convifi.com/remove-bg',
+  url: `${SITE_URL}/remove-bg`,
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Any (browser-based)',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },

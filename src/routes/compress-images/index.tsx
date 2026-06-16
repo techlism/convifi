@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { SITE_URL, SITE_OG_IMAGE } from '@/lib/site'
 import ImageCompressor from '@/components/ImageCompressor'
 import { Lock, CheckCircle, Lightning, DeviceMobile } from '@phosphor-icons/react'
 
@@ -20,16 +21,16 @@ export const Route = createFileRoute('/compress-images/')({
       { property: 'og:title', content: 'Compress Images Free — No Upload | Convifi' },
       { property: 'og:description', content: 'Compress JPEG, PNG, WebP and BMP images instantly in your browser. No upload, no server, 100% private.' },
       { property: 'og:type', content: 'website' },
-      { property: 'og:url', content: 'https://convifi.com/compress-images' },
-      { property: 'og:image', content: 'https://convifi.com/opengraph.png' },
+      { property: 'og:url', content: `${SITE_URL}/compress-images` },
+      { property: 'og:image', content: SITE_OG_IMAGE },
       { property: 'og:image:alt', content: 'Compress Images Free — Convifi' },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: 'Compress Images Free — No Upload | Convifi' },
       { name: 'twitter:description', content: 'Compress JPEG, PNG, WebP images instantly in your browser. Nothing uploaded.' },
-      { name: 'twitter:image', content: 'https://convifi.com/opengraph.png' },
+      { name: 'twitter:image', content: SITE_OG_IMAGE },
       { name: 'robots', content: 'index, follow' },
     ],
-    links: [{ rel: 'canonical', href: 'https://convifi.com/compress-images' }],
+    links: [{ rel: 'canonical', href: `${SITE_URL}/compress-images` }],
   }),
 })
 
@@ -37,7 +38,7 @@ const schema = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
   name: 'Image Compressor — Compress Images Free',
-  url: 'https://convifi.com/compress-images',
+  url: `${SITE_URL}/compress-images`,
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Any (browser-based)',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },

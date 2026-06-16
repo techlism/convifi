@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { SITE_URL } from '@/lib/site'
 
 export const Route = createFileRoute('/terms/')({
   component: TermsPage,
@@ -12,7 +13,7 @@ export const Route = createFileRoute('/terms/')({
       },
       { name: 'robots', content: 'index, follow' },
     ],
-    links: [{ rel: 'canonical', href: 'https://convifi.com/terms' }],
+    links: [{ rel: 'canonical', href: `${SITE_URL}/terms` }],
   }),
 })
 
@@ -106,7 +107,7 @@ function TermsPage() {
       </article>
 
       <div className="mt-10 pt-8 border-t border-border">
-        <Link to={"/privacy" as any} className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-4">
+        <Link to="/privacy" className="text-sm text-muted-foreground hover:text-foreground underline underline-offset-4">
           Read our Privacy Policy →
         </Link>
       </div>

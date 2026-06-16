@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { SITE_URL } from '@/lib/site'
 import { blogPosts } from '@/lib/blog-posts'
 import { CalendarBlank, Clock } from '@phosphor-icons/react'
 
@@ -14,7 +15,7 @@ export const Route = createFileRoute('/blog/')({
       },
       { name: 'robots', content: 'index, follow' },
     ],
-    links: [{ rel: 'canonical', href: 'https://convifi.com/blog' }],
+    links: [{ rel: 'canonical', href: `${SITE_URL}/blog` }],
   }),
 })
 

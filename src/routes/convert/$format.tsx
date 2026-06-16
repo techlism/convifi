@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { SITE_URL, SITE_OG_IMAGE } from '@/lib/site'
 import { conversions } from '@/lib/conversion-formats'
 import type { Conversion } from '@/lib/conversion-formats'
 
@@ -34,13 +35,13 @@ export const Route = createFileRoute('/convert/$format')({
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: m.twitter?.title },
         { name: 'twitter:description', content: m.twitter?.description },
-        { property: 'og:image', content: 'https://convifi.com/opengraph.png' },
+        { property: 'og:image', content: SITE_OG_IMAGE },
         { property: 'og:image:alt', content: m.openGraph?.title ?? 'Convifi File Converter' },
-        { name: 'twitter:image', content: 'https://convifi.com/opengraph.png' },
+        { name: 'twitter:image', content: SITE_OG_IMAGE },
         { name: 'twitter:image:alt', content: m.twitter?.title ?? 'Convifi File Converter' },
         { name: 'robots', content: 'index, follow' },
       ].filter((tag) => Object.values(tag).every((v) => v)),
-      links: [{ rel: 'canonical', href: `https://convifi.com/convert/${format}` }],
+      links: [{ rel: 'canonical', href: `${SITE_URL}/convert/${format}` }],
     }
   },
 })

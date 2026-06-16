@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { SITE_URL, SITE_OG_IMAGE } from '@/lib/site'
 import ReduceImageInKB from '@/components/ReduceImageInKB'
 import { Lock, CheckCircle, Lightning, DeviceMobile } from '@phosphor-icons/react'
 
@@ -20,16 +21,16 @@ export const Route = createFileRoute('/reduce-image-in-kb/')({
       { property: 'og:title', content: 'Reduce Image Size to KB — Free, No Upload | Convifi' },
       { property: 'og:description', content: 'Set a target size in KB and get as close as possible — instantly, in your browser. No upload, no account.' },
       { property: 'og:type', content: 'website' },
-      { property: 'og:url', content: 'https://convifi.com/reduce-image-in-kb' },
-      { property: 'og:image', content: 'https://convifi.com/opengraph.png' },
+      { property: 'og:url', content: `${SITE_URL}/reduce-image-in-kb` },
+      { property: 'og:image', content: SITE_OG_IMAGE },
       { property: 'og:image:alt', content: 'Reduce Image to KB — Convifi' },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: 'Reduce Image Size to KB — Free, No Upload' },
       { name: 'twitter:description', content: 'Compress any image to an exact KB target in your browser. Nothing uploaded.' },
-      { name: 'twitter:image', content: 'https://convifi.com/opengraph.png' },
+      { name: 'twitter:image', content: SITE_OG_IMAGE },
       { name: 'robots', content: 'index, follow' },
     ],
-    links: [{ rel: 'canonical', href: 'https://convifi.com/reduce-image-in-kb' }],
+    links: [{ rel: 'canonical', href: `${SITE_URL}/reduce-image-in-kb` }],
   }),
 })
 
@@ -37,7 +38,7 @@ const schema = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
   name: 'Image Size Reducer — Reduce to KB',
-  url: 'https://convifi.com/reduce-image-in-kb',
+  url: `${SITE_URL}/reduce-image-in-kb`,
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Any (browser-based)',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },

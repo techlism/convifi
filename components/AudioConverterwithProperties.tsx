@@ -44,12 +44,15 @@ export default function AudioConverterWithProperties({
   const parseProgress = useCallback((msg: string) => {
     if (!msg) return;
     if (msg.includes("Duration:")) {
-      const dur = msg.split("Duration:")[1].split(",")[0].trim();
-      const [h, m, s] = dur.split(":").map(Number);
-      totalDurationRef.current = h * 3600 + m * 60 + Math.floor(s);
+      const dur = msg.split("Duration:")[1]?.split(",")[0]?.trim();
+      if (dur) {
+        const [h, m, s] = dur.split(":").map(Number);
+        totalDurationRef.current = h * 3600 + m * 60 + Math.floor(s);
+      }
     }
     if (msg.includes("time=")) {
-      const t = msg.split("time=")[1].split(" ")[0].trim();
+      const t = msg.split("time=")[1]?.split(" ")[0]?.trim();
+      if (!t) return;
       const [h, m, s] = t.split(":").map(Number);
       const current = h * 3600 + m * 60 + Math.floor(s);
       if (totalDurationRef.current > 0) {
@@ -77,7 +80,6 @@ export default function AudioConverterWithProperties({
           coreURL: await toBlobURL(`${CORE_BASE}/ffmpeg-core.js`, "text/javascript"),
           wasmURL: await toBlobURL(`${CORE_BASE}/ffmpeg-core.wasm`, "application/wasm"),
         });
-        console.log("[convifi] audio ffmpeg loaded — single-thread");
         setLoaded(true);
       } catch (error) {
         console.error("[convifi] failed to load FFmpeg:", error);
@@ -113,14 +115,11 @@ export default function AudioConverterWithProperties({
     if (audioBitrate !== "original") appliedAttributes.push("-b:a", audioBitrate);
 
     try {
-      console.log(`[convifi] writing input.${primaryFormat}…`);
       await ffmpeg.writeFile(`input.${primaryFormat}`, await fetchFile(inputFile));
 
       const cmd = ["-i", `input.${primaryFormat}`, ...appliedAttributes, `output.${format}`];
-      console.log("[convifi] exec:", cmd.join(" "));
 
       const code = await ffmpeg.exec(cmd);
-      console.log("[convifi] exec exit code:", code);
 
       if (code !== 0) {
         setErrorMsg(`FFmpeg exited with code ${code}. Check the logs below for details.`);

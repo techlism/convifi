@@ -188,13 +188,13 @@ export default function Footer() {
             &copy;{new Date().getFullYear()} Convifi. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-            <Link to={"/about" as any} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="/about" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
               About
             </Link>
-            <Link to={"/privacy" as any} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="/privacy" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
               Privacy Policy
             </Link>
-            <Link to={"/terms" as any} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="/terms" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
               Terms &amp; Conditions
             </Link>
             <DarkModeSwitch />
