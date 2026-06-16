@@ -22,7 +22,13 @@ export const Route = createRootRoute({
         content: 'file converter, video converter, audio converter, image converter, no upload, free converter, mkv to mp4, mp4 to mp3, png to pdf, browser based',
       },
     ],
-    links: [{ rel: 'stylesheet', href: appCss }],
+    links: [
+      { rel: 'stylesheet', href: appCss },
+      { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
+      { rel: 'icon', type: 'image/svg+xml', href: '/convifi.svg' },
+      { rel: 'apple-touch-icon', href: '/convifi_192.png' },
+      { rel: 'manifest', href: '/manifest.json' },
+    ],
   }),
   component: RootComponent,
 })

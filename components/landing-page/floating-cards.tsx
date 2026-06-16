@@ -155,8 +155,8 @@ export function FloatingCards() {
         </div>
       </div>
 
-      <div className="absolute max-w-[90vw] max-h-[90vw] w-[400px] h-[350px] rounded-full border border-border/20 animate-[spin_60s_linear_infinite]" />
-      <div className="absolute max-w-[70vw] max-h-[70vw] w-[300px] h-[250px] rounded-full border border-border/30 animate-[spin_40s_linear_infinite_reverse]" />
+      <div className="absolute max-w-[90vw] max-h-[90vw] w-100 h-87.5 rounded-full border border-border/20 animate-[spin_60s_linear_infinite]" />
+      <div className="absolute max-w-[70vw] max-h-[70vw] w-75 h-62.5 rounded-full border border-border/30 animate-[spin_40s_linear_infinite_reverse]" />
 
       {cardTypes.map((card, index) => (
         <FloatingCard key={card.id} card={card} index={index} mousePosition={mousePosition} />
