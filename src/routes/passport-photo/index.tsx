@@ -7,7 +7,7 @@ export const Route = createFileRoute('/passport-photo/')({
   component: PassportPhotoPage,
   head: () => ({
     meta: [
-      { title: 'Passport Photo Maker — Free, Print-Ready, No Upload | Convifi' },
+      { title: 'Passport Size Photo Maker — Free, Print-Ready, No Upload | Convifi' },
       {
         name: 'description',
         content:
