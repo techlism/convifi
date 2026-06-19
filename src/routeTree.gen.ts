@@ -14,6 +14,7 @@ import { Route as TermsIndexRouteImport } from './routes/terms/index'
 import { Route as RemoveBgIndexRouteImport } from './routes/remove-bg/index'
 import { Route as ReduceImageInKbIndexRouteImport } from './routes/reduce-image-in-kb/index'
 import { Route as PrivacyIndexRouteImport } from './routes/privacy/index'
+import { Route as PassportPhotoIndexRouteImport } from './routes/passport-photo/index'
 import { Route as CompressImagesIndexRouteImport } from './routes/compress-images/index'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
@@ -43,6 +44,11 @@ const ReduceImageInKbIndexRoute = ReduceImageInKbIndexRouteImport.update({
 const PrivacyIndexRoute = PrivacyIndexRouteImport.update({
   id: '/privacy/',
   path: '/privacy/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PassportPhotoIndexRoute = PassportPhotoIndexRouteImport.update({
+  id: '/passport-photo/',
+  path: '/passport-photo/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompressImagesIndexRoute = CompressImagesIndexRouteImport.update({
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/about/': typeof AboutIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/compress-images/': typeof CompressImagesIndexRoute
+  '/passport-photo/': typeof PassportPhotoIndexRoute
   '/privacy/': typeof PrivacyIndexRoute
   '/reduce-image-in-kb/': typeof ReduceImageInKbIndexRoute
   '/remove-bg/': typeof RemoveBgIndexRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutIndexRoute
   '/blog': typeof BlogIndexRoute
   '/compress-images': typeof CompressImagesIndexRoute
+  '/passport-photo': typeof PassportPhotoIndexRoute
   '/privacy': typeof PrivacyIndexRoute
   '/reduce-image-in-kb': typeof ReduceImageInKbIndexRoute
   '/remove-bg': typeof RemoveBgIndexRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/about/': typeof AboutIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/compress-images/': typeof CompressImagesIndexRoute
+  '/passport-photo/': typeof PassportPhotoIndexRoute
   '/privacy/': typeof PrivacyIndexRoute
   '/reduce-image-in-kb/': typeof ReduceImageInKbIndexRoute
   '/remove-bg/': typeof RemoveBgIndexRoute
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/about/'
     | '/blog/'
     | '/compress-images/'
+    | '/passport-photo/'
     | '/privacy/'
     | '/reduce-image-in-kb/'
     | '/remove-bg/'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/blog'
     | '/compress-images'
+    | '/passport-photo'
     | '/privacy'
     | '/reduce-image-in-kb'
     | '/remove-bg'
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/about/'
     | '/blog/'
     | '/compress-images/'
+    | '/passport-photo/'
     | '/privacy/'
     | '/reduce-image-in-kb/'
     | '/remove-bg/'
@@ -154,6 +166,7 @@ export interface RootRouteChildren {
   AboutIndexRoute: typeof AboutIndexRoute
   BlogIndexRoute: typeof BlogIndexRoute
   CompressImagesIndexRoute: typeof CompressImagesIndexRoute
+  PassportPhotoIndexRoute: typeof PassportPhotoIndexRoute
   PrivacyIndexRoute: typeof PrivacyIndexRoute
   ReduceImageInKbIndexRoute: typeof ReduceImageInKbIndexRoute
   RemoveBgIndexRoute: typeof RemoveBgIndexRoute
@@ -195,6 +208,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy/'
       preLoaderRoute: typeof PrivacyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/passport-photo/': {
+      id: '/passport-photo/'
+      path: '/passport-photo'
+      fullPath: '/passport-photo/'
+      preLoaderRoute: typeof PassportPhotoIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/compress-images/': {
@@ -242,6 +262,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutIndexRoute: AboutIndexRoute,
   BlogIndexRoute: BlogIndexRoute,
   CompressImagesIndexRoute: CompressImagesIndexRoute,
+  PassportPhotoIndexRoute: PassportPhotoIndexRoute,
   PrivacyIndexRoute: PrivacyIndexRoute,
   ReduceImageInKbIndexRoute: ReduceImageInKbIndexRoute,
   RemoveBgIndexRoute: RemoveBgIndexRoute,

@@ -165,6 +165,7 @@ export default function Footer() {
                 { to: "/compress-images", label: "Compress Images" },
                 { to: "/reduce-image-in-kb", label: "Reduce Image to KB" },
                 { to: "/remove-bg", label: "Remove Background" },
+                { to: "/passport-photo", label: "Passport Photo" },
                 { to: "/blog", label: "Blog & Guides" },
               ].map(({ to, label }) => (
                 <div key={to} className="flex items-center gap-1.5">

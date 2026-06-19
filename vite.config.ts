@@ -12,6 +12,7 @@ const staticPages = [
   { path: '/compress-images' },
   { path: '/remove-bg' },
   { path: '/reduce-image-in-kb' },
+  { path: '/passport-photo' },
   { path: '/about' },
   { path: '/privacy' },
   { path: '/terms' },
